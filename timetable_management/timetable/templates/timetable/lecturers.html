@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lecturers List</title>
+</head>
+<body>
+    <h1>Lecturers</h1>
+    <ul>
+        {% for lecturer in lecturers %}
+            <li>{{ lecturer.name }} - {{ lecturer.position }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">Back to Time Table</a>
+</body>
+</html>
