@@ -1,15 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lecturers List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px;
+        }
+        .navbar-nav {
+            list-style-type: none;
+            padding: 0;
+        }
+        .nav-item {
+            display: inline;
+            margin-right: 15px;
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+        .nav-link:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Lecturers</h1>
-    <ul>
-        {% for lecturer in lecturers %}
-            <li>{{ lecturer.name }} - {{ lecturer.position }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'index' %}">Back to Time Table</a>
+
+    <div class="navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'lecturers' %}" style="font-weight: bold;">Lecturers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'subjects' %}">Subjects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'halls' %}">Halls</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Lecturers List</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Email</th>
+            </tr>
+            {% for lecturer in lecturers %}
+            <tr>
+                <td>{{ lecturer.name }}</td>
+                <td>{{ lecturer.position }}</td>
+                <td>{{ lecturer.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 </body>
 </html>
