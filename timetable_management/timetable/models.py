@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser 
 
 class Lecturer(models.Model):
     name = models.CharField(max_length=100)
@@ -35,3 +36,51 @@ class TimeSlot(models.Model):
 
     def __str__(self):
         return f"{self.subject.name} - {self.start_time} to {self.end_time} on {self.days_of_week}"
+
+from django.contrib.auth.models import AbstractUser 
+from django.db import models
+
+class CustomUser (AbstractUser ):
+    is_admin = models.BooleanField(default=False)
+
+    class Meta:
+        permissions = [
+            ('can_view_dashboard', 'Can view dashboard'),
+            ('can_edit_profile', 'Can edit profile'),
+            # Add any additional custom permissions here
+        ]
+        verbose_name = 'Custom User'
+        verbose_name_plural = 'Custom Users'
+        # Specify related names to avoid clashes
+        unique_together = ('username', 'email')  # Optional: if you want to enforce unique usernames and emails
+
+    # Override the groups and user_permissions fields to add related_name
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='customuser_set',  # Change this to avoid conflict
+        blank=True,
+        help_text='The groups this user belongs to.',
+        verbose_name='groups',
+    )
+
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='customuser_set',  # Change this to avoid conflict
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions',
+    )
+
+class Timetable(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    lecturer = models.ForeignKey(CustomUser , on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    days_of_week = models.CharField(max_length=20)
+
+class LeaveRequest(models.Model):
+    lecturer = models.ForeignKey(CustomUser , on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    substitute = models.ForeignKey(CustomUser , on_delete=models.CASCADE, related_name='substitutes', null=True)
