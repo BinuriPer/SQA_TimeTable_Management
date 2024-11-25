@@ -95,3 +95,31 @@ def user_login(request):
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'timetable/login.html')  # Corrected path
+
+# timetable/views.py
+
+from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy
+from .models import Lecturer, Subject, TimeSlot, Hall
+from .forms import TimeSlotForm  # Ensure you have this form defined
+
+class LecturerListView(ListView):
+    model = Lecturer
+    template_name = 'timetable/lecturer_list.html'  # Adjust this path if necessary
+    context_object_name = 'lecturers'  # This will be the variable name in the template
+
+class SubjectListView(ListView):
+    model = Subject
+    template_name = 'timetable/subject_list.html'  # Adjust this path if necessary
+    context_object_name = 'subjects'
+
+class TimeSlotListView(ListView):
+    model = TimeSlot
+    template_name = 'timetable/timeslot_list.html'  # Adjust this path if necessary
+    context_object_name = 'timeslots'
+
+class CreateTimeSlotView(CreateView):
+    model = TimeSlot
+    form_class = TimeSlotForm  # Ensure you have this form defined
+    template_name = 'timetable/create_timeslot.html'  # Adjust this path if necessary
+    success_url = reverse_lazy('timeslot_list')  # Redirect after successful creation

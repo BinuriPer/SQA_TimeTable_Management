@@ -11,3 +11,13 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
 ]
+
+from django.urls import path
+from .views import LecturerListView, SubjectListView, TimeSlotListView, CreateTimeSlotView
+
+urlpatterns = [
+    path('lecturers/', LecturerListView.as_view(), name='lecturer_list'),
+    path('subjects/', SubjectListView.as_view(), name='subject_list'),
+    path('timeslots/', TimeSlotListView.as_view(), name='timeslot_list'),
+    path('timeslots/create/', CreateTimeSlotView.as_view(), name='create_timeslot'),
+]
