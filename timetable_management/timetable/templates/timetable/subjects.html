@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subjects List</title>
+</head>
+<body>
+    <h1>Subjects</h1>
+    <ul>
+        {% for subject in subjects %}
+            <li>{{ subject.name }} - {{ subject.weekly_hours }} hours per week</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">Back to Time Table</a>
+</body>
+</html>

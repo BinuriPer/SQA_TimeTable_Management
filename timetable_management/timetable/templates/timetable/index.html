@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Table</title>
+</head>
+<body>
+    <h1>Time Table</h1>
+    <ul>
+        {% for time_slot in time_slots %}
+            <li>{{ time_slot.subject.name }} by {{ time_slot.lecturer.name }} in {{ time_slot.hall.name }} from {{ time_slot.start_time }} to {{ time_slot.end_time }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
