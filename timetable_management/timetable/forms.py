@@ -61,3 +61,27 @@ class TimetableForm(forms.ModelForm):
                 raise forms.ValidationError("This lecturer and hall are already booked for this time slot.")
 
         return cleaned_data
+    
+#user account creation
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    birthdate = forms.DateField(required=True, widget=forms.SelectDateWidget(years=range(1900, 2023)))
+    discord_id = forms.CharField(max_length=100, required=False)
+    zoom_id = forms.CharField(max_length=100, required=False)
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'birthdate', 'discord_id', 'zoom_id']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'birthdate': forms.Select(attrs={'class': 'form-control'}),
+            'discord_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'zoom_id': forms.TextInput(attrs={'class': 'form-control'}),
+        }
