@@ -1,8 +1,7 @@
 # timetable/tests/test_views.py
 
-from django.test import TestCase
-from django.urls import reverse
-from timetable.models import Lecturer, Subject, Hall, TimeSlot
+from timetable.models import TimeSlot
+
 
 class LecturerViewTest(TestCase):
 
